@@ -1,0 +1,15 @@
+.tilda{}
+@media screen and (max-width: 767px) {
+	.tilda{
+		text-align: center;
+	}
+	.exp {
+		-webkit-writing-mode: vertical-rl;
+		-moz-writing-mode: vertical-rl;
+		-ms-writing-mode: tb-rl;
+		-ms-writing-mode: vertical-rl;
+		writing-mode: vertical-rl;
+		display: inline-block;
+		text-align: center;
+	}
+}
