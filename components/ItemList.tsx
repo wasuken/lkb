@@ -15,33 +15,55 @@ import * as dayjs from "dayjs";
 import * as isBetween from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
+interface KakeiCheckItem extends KakeiItem {
+  originIndex: number; // 元々の位置
+  checked: boolean;
+}
+
 export default function ItemInput() {
   const { items, setItems } = useUser();
-  const [itemCheckList, setItemCheckList] = useState<boolean[]>([]);
+  const [checkItems, setCheckItems] = useState<KakeiCheckItem[]>(
+    items.map((i, ind) => {
+      const ni = { ...i, checked: false, originIndex: ind };
+      return ni;
+    })
+  );
+
   const [dispDateBegin, setDispDateBegin] = useState<Date>(new Date());
   const [dispDateEnd, setDispDateEnd] = useState<Date>(new Date());
   useEffect(() => {
-    setItemCheckList(items.map((_) => false));
+    setCheckItems(
+      items.map((i, ind) => {
+        const ni = { ...i, checked: false, originIndex: ind };
+        return ni;
+      })
+    );
   }, [items]);
 
   function check(v: boolean, i: number) {
-    let niList = [...itemCheckList];
-    niList[i] = v;
-    setItemCheckList(niList);
+    let niList = [...checkItems];
+    niList[i].checked = v;
+    setCheckItems(niList);
   }
   function deleteSelected() {
-    let nl: KakeiItem[] = [];
-    itemCheckList.forEach((v, i) => {
-      if (!v) nl.push(items[i]);
-    });
-    setItems(nl);
-    setItemCheckList(items.map((_) => false));
+    let niList = [...checkItems];
+    setCheckItems(niList.filter((i) => i.checked));
   }
   function clearSelected() {
-    setItemCheckList(items.map((_) => false));
+    let niList = [...checkItems];
+    setCheckItems(
+      niList.map((i) => {
+        return { ...i, checked: false };
+      })
+    );
   }
   function allSelect() {
-    setItemCheckList(items.map((_) => true));
+    let niList = [...checkItems];
+    setCheckItems(
+      niList.map((i) => {
+        return { ...i, checked: true };
+      })
+    );
   }
   function setBegin(dt: Date) {
     if (dayjs(dispDateEnd).isAfter(dayjs(dt))) {
@@ -56,10 +78,7 @@ export default function ItemInput() {
   function dtFilter() {
     const b = dayjs(dispDateBegin);
     const e = dayjs(dispDateEnd);
-    const v = items.filter((i) => dayjs(i.date).isBetween(b, e));
-    console.log(b, e);
-    console.log(items);
-    console.log(v);
+    const v = checkItems.filter((i) => dayjs(i.date).isBetween(b, e));
     return v;
   }
 
@@ -127,7 +146,7 @@ export default function ItemInput() {
                   <Input
                     className="mx-2"
                     type="checkbox"
-                    checked={itemCheckList[i] ?? false}
+                    checked={item.checked}
                     onChange={(e) => check(e.target.checked, i)}
                   />
                   {item.name}
