@@ -33,7 +33,7 @@ export default function ItemInput() {
           <Input
             type="number"
             onChange={(e) => setAmount(Number(e.target.value))}
-            value={amount}
+            value={amount === 0 ? "" : amount}
             placeholder="amount"
           />
         </Label>

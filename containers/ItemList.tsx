@@ -29,8 +29,8 @@ export default function ItemInput() {
     })
   );
 
-  const [dispDateBegin, setDispDateBegin] = useState<Date>(new Date());
-  const [dispDateEnd, setDispDateEnd] = useState<Date>(new Date());
+  const [dispDateBegin, setDispDateBegin] = useState<Date>(dayjs().startOf('week').toDate());
+  const [dispDateEnd, setDispDateEnd] = useState<Date>(dayjs().endOf('week').toDate());
   useEffect(() => {
     setCheckItems(
       items.map((i, ind) => {
@@ -46,8 +46,19 @@ export default function ItemInput() {
     setCheckItems(niList);
   }
   function deleteSelected() {
-    let niList = [...checkItems];
-    setCheckItems(niList.filter((i) => i.checked));
+    let niList: KakeiItem[] = [];
+    let rmList: number[] = [];
+    [...checkItems].forEach((i) => {
+      if (i.checked) {
+        rmList.push(i.originIndex);
+      }
+    });
+    items.forEach((i, ind) => {
+      if (!rmList.includes(ind)) {
+        niList.push(i);
+      }
+    });
+    setItems(niList);
   }
   function clearSelected() {
     let niList = [...checkItems];
@@ -139,6 +150,7 @@ export default function ItemInput() {
             className={
               "d-flex justify-content-" + (item.ktype == 1 ? "start" : "end")
             }
+            key={i}
           >
             <Card className="w-50">
               <CardBody>
