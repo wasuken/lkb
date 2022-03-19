@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import ItemInput from "../containers/ItemInput";
-import ItemList from "../containers/ItemList";
+import ChartYMD from "../containers/ChartYMD";
 import Header from "../components/Header";
+import ItemChartSelect from "../containers/ItemChartSelect.tsx";
 
-const Home: NextPage = () => {
+const Chart: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,11 +14,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 	  <Header></Header>
-      <ItemInput />
-      <div className="p-2"></div>
-      <ItemList />
     </div>
   );
 };
 
-export default Home;
+export default Chart;
