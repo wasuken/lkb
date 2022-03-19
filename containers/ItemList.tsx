@@ -11,8 +11,8 @@ import {
   CardBody,
   Label,
 } from "reactstrap";
-import * as dayjs from "dayjs";
-import * as isBetween from "dayjs/plugin/isBetween";
+import { default as dayjs } from 'dayjs';
+import { default as isBetween} from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
 interface KakeiCheckItem extends KakeiItem {

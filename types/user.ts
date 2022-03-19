@@ -14,7 +14,6 @@ export interface UserInfo {
   name: string;
   setName: (v: string) => void;
   items: KakeiItem[];
-  itemIndexes: ItemIndexNode[];
   setItems: (v: KakeiItem[]) => void;
   jsonAutoSave: boolean;
   setJsonAutoSave: (v: boolean) => void;
@@ -26,7 +25,6 @@ export const initUserInfoState: UserInfo = {
   items: [],
   setName: (v) => v,
   setItems: (v) => v,
-  itemIndexes: [],
   jsonAutoSave: false,
   setJsonAutoSave: (v) => v,
   setItemsFromLS: () => {},

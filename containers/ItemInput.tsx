@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useUser } from "../context/user";
 import { KakeiItem, KakeiType } from "../types/kakei";
 import { Label, Button, Input } from "reactstrap";
-import * as dayjs from "dayjs";
+import { default as dayjs } from 'dayjs';
+
 
 export default function ItemInput() {
   const { items, setItems, jsonAutoSave, setJsonAutoSave, setItemsFromLS } =
@@ -46,7 +47,7 @@ export default function ItemInput() {
           <Input
             type="checkbox"
             onChange={(e) => setJsonAutoSave(e.target.checked)}
-            value={jsonAutoSave}
+            checked={jsonAutoSave}
           />
         </Label>
       </div>
