@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import ChartBox from "../components/ChartBox";
 import { useUser } from "../context/user";
-import * as dayjs from "dayjs";
-import * as isBetween from "dayjs/plugin/isBetween";
+/* import * as dayjs from "dayjs"; */
+import { default as dayjs } from 'dayjs';
+import { default as isBetween} from "dayjs/plugin/isBetween";
 dayjs.extend(isBetween);
 
 export default function DayChart() {

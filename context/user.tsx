@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 import { initUserInfoState, UserInfo } from "../types/user";
 import { KakeiItem } from "../types/kakei";
 
@@ -8,7 +8,12 @@ export function useUser() {
   return useContext(UserContext);
 }
 
-export function UserProvider({ children }) {
+interface Props {
+  children: ReactNode;
+}
+
+export function UserProvider(props: Props) {
+  const { children } = props;
   const [name, setName] = useState<string>("");
   const [items, setItems] = useState<KakeiItem[]>([]);
   const [jsonAutoSave, setJsonAutoSave] = useState<boolean>(false);
@@ -21,7 +26,7 @@ export function UserProvider({ children }) {
     v.forEach((_, i) => (v[i].date = new Date(v[i].date)));
     setItems(v);
   }
-  const value = {
+  const value: UserInfo = {
     name,
     setName,
     items,

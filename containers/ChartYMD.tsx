@@ -1,11 +1,12 @@
 import ChartBox from "../components/ChartBox";
 import { useUser } from "../context/user";
-import * as dayjs from "dayjs";
+/* import * as dayjs from "dayjs"; */
+import { default as dayjs } from 'dayjs';
 
 export default function ChartYMD() {
   const { items } = useUser();
   let data = [...items];
-  data.sort((a, b) => (dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1));
+  data.sort((a, b) => dayjs(a.date).isAfter(dayjs(b.date)) ? 1 : -1);
   // 現在値のみ
   const curr = data.reduce((acm, i) => acm + i.ktype * i.amount, 0);
   // 累積
