@@ -31,8 +31,18 @@ export default function Header() {
               </Link>
             </NavItem>
             <NavItem>
-              <Link className="nav-link" href="/chart">
-                <NavLink href="/chart">chart</NavLink>
+              <Link className="nav-link" href="/year">
+                <NavLink href="/year">year</NavLink>
+              </Link>
+            </NavItem>
+			<NavItem>
+              <Link className="nav-link" href="/month">
+                <NavLink href="/month">month</NavLink>
+              </Link>
+            </NavItem>
+			<NavItem>
+              <Link className="nav-link" href="/day">
+                <NavLink href="/day">day</NavLink>
               </Link>
             </NavItem>
           </Nav>

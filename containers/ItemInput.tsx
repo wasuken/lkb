@@ -5,11 +5,13 @@ import { Label, Button, Input } from "reactstrap";
 import * as dayjs from "dayjs";
 
 export default function ItemInput() {
-  const { items, setItems } = useUser();
+  const { items, setItems, jsonAutoSave, setJsonAutoSave, setItemsFromLS } =
+    useUser();
   const [iname, setIname] = useState<string>("");
   const [amount, setAmount] = useState<number>(0);
   const [tp, setTp] = useState<boolean>(false);
   const [accDate, setAccDate] = useState<Date>(new Date());
+
   function submit() {
     let nitems: KakeiItem[] = [...items];
     const it: KakeiItem = {
@@ -25,8 +27,29 @@ export default function ItemInput() {
     setAccDate(new Date());
     setTp(false);
   }
+  function clearItemsFromLS(){
+	localStorage.removeItem('items');
+  }
   return (
-    <div>
+    <div className="shadow-sm p-3 mb-5 bg-body rounded">
+      <div className="mt-2">
+        <Button className="m-1" color="primary" outline onClick={() => setItemsFromLS()}>
+          LS読み取り
+        </Button>
+		<Button className="m-1" color="primary" outline onClick={() => clearItemsFromLS()}>
+          LS削除
+        </Button>
+      </div>
+      <div className="mt-2">
+        <Label>
+          LS自動保存
+          <Input
+            type="checkbox"
+            onChange={(e) => setJsonAutoSave(e.target.checked)}
+            value={jsonAutoSave}
+          />
+        </Label>
+      </div>
       <div>
         <Label>
           金額

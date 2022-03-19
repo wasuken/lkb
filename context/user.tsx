@@ -1,25 +1,34 @@
-import { createContext, useContext, useState } from 'react';
-import { initUserInfoState, UserInfo } from '../types/user';
-import {
-  KakeiItem
-} from '../types/kakei';
+import { createContext, useContext, useState } from "react";
+import { initUserInfoState, UserInfo } from "../types/user";
+import { KakeiItem } from "../types/kakei";
 
 const UserContext = createContext<UserInfo>(initUserInfoState);
 
-export function useUser(){
+export function useUser() {
   return useContext(UserContext);
 }
 
-export function UserProvider({ children }){
-  const [ name, setName ] = useState<string>("");
-  const [ items, setItems ] = useState<KakeiItem[]>([]);
-  const value = {
-	name, setName,
-	items, setItems
+export function UserProvider({ children }) {
+  const [name, setName] = useState<string>("");
+  const [items, setItems] = useState<KakeiItem[]>([]);
+  const [jsonAutoSave, setJsonAutoSave] = useState<boolean>(false);
+  function setItemsSLS(is: KakeiItem[]) {
+    setItems(is);
+    localStorage.setItem("items", JSON.stringify(is));
   }
-  return (
-	<UserContext.Provider value={ value }>
-	{ children }
-	</UserContext.Provider>
-  );
+  function setItemsFromLS() {
+    let v: KakeiItem[] = JSON.parse(localStorage.getItem("items") ?? "[]");
+    v.forEach((_, i) => (v[i].date = new Date(v[i].date)));
+    setItems(v);
+  }
+  const value = {
+    name,
+    setName,
+    items,
+    setItems: jsonAutoSave ? setItemsSLS : setItems,
+    jsonAutoSave,
+    setJsonAutoSave,
+    setItemsFromLS,
+  };
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
